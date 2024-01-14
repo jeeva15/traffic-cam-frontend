@@ -1,0 +1,24 @@
+.gridColumn {
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding: 15px;
+
+  // For decoration only
+  // background-color: #bbeffd;
+  // border: 1px solid #61dafb;
+  
+  // text-align: left;
+  // margin-bottom: 25px;
+}
+
+.gridColumnWidth-3 {
+  flex-grow: 3;
+}
+
+.gridColumnWidth-2 {
+  flex-grow: 2;
+}
+
+.gridColumnWidth-4 {
+  flex-grow: 4;
+}
