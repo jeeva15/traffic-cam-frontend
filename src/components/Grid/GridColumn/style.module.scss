@@ -1,12 +1,12 @@
 .gridColumn {
   flex-grow: 1;
-  flex-shrink: 0;
+  // flex-shrink: 0;
   padding: 15px;
 
   // For decoration only
   // background-color: #bbeffd;
   // border: 1px solid #61dafb;
-  
+
   // text-align: left;
   // margin-bottom: 25px;
 }
@@ -21,4 +21,10 @@
 
 .gridColumnWidth-4 {
   flex-grow: 4;
+}
+
+@media screen and (max-width: 600px) {
+  .gridRow {
+    padding-top: 0px;
+  }
 }

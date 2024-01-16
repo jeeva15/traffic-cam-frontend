@@ -1,9 +1,9 @@
-  .gridRow {
-    display: flex;
-  }
-  .gridRowCol3 {
-    width: 33%;
-  }
+.gridRow {
+  display: flex;
+}
+.gridRowCol3 {
+  width: 33%;
+}
 
 .gridRowcol-4 {
   width: 25%;
@@ -15,4 +15,10 @@
 
 .gridRow--col-2 {
   width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  .gridRow {
+    display: block;
+  }
 }

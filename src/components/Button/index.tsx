@@ -1,22 +1,18 @@
-import React, { FC, ReactNode } from "react";
-
+import { FC, ReactNode } from "react";
 import styles from "./style.module.scss";
+import cx from "classnames";
 
 interface StateProps {
-    children: ReactNode;
-    width?:string;
-    height?: string;
-    onClick:()=> void
+  children: ReactNode;
+  onClick: (data: any) => void;
+  className?: string;
 }
 
-const Button: FC<StateProps>= ({ children, width, height, onClick }) => {
+const Button: FC<StateProps> = ({ children, className, onClick }) => {
   return (
-     <button 
-      className={styles.butt}
-      onClick={onClick}
-      >
-        {children}
-      </button>
+    <button className={cx(styles.btn, className)} onClick={onClick}>
+      {children}
+    </button>
   );
 };
 
