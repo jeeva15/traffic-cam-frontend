@@ -10,13 +10,14 @@ interface StateProps {
 }
 
 const WeatherCard: FC<StateProps> = ({ location, forcast, date }) => {
+  const iconClassName = `wi wi-day-${forcast?.toLowerCase()}`;
   return (
     <div className={styles.widget}>
       <div className={cx(styles.leftPanel, styles.panel)}>
         <div className="title">{date}</div>
         <div className="city padt-10 padb-10">{location}</div>
         <div className={styles.forcast}>
-          <i className="wi wi-day-cloudy"></i>
+          <i className={iconClassName}></i>
           {forcast}
         </div>
       </div>

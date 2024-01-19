@@ -73,6 +73,25 @@ label {
   padding-bottom: 10px;
 }
 
+.recentSearchBadges {
+  background-color: #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 4rem;
+  font-size: 12px;
+  margin: 8px 8px 8px 0;
+  padding: 12px 24px;
+  width: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.recent {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
 @media screen and (max-width: 600px) {
   .col25,
   .col75,

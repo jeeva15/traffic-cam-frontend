@@ -1,33 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBox from "../../containers/SearchBox";
-import { handleGetRequest } from "../../utils/requestUtils";
+import {
+  getRecentUsersSearch,
+  getTrafficImagesData,
+  getWeatherForecastData,
+} from "../../utils/apiHandler";
 import { GridColumn, GridContainer, GridRow } from "../../components/Grid";
 import Card from "../../components/Card";
 import WeatherCard from "../../components/WeatherCard";
-import { getCurrentDateString } from "../../utils/utils";
+import {
+  encodeBase64,
+  formatDateDDMMYYYYHHmmss,
+  getCurrentDateString,
+  isNotEmpty,
+} from "../../utils/utils";
 import ImageCard from "../../components/ImageCard";
+import { useCookies } from "react-cookie";
+import { USER_ID_COOKIE } from "../../common/constants";
+import RecentSearches from "../../containers/RecentSearches";
 
 const Home = () => {
   const [tableData, setTableData] = useState([]);
+  const [cookies, setCookie] = useCookies([USER_ID_COOKIE]);
   const [weatherForcast, setWeatherForcast] = useState("");
   const [photo, setPhoto] = useState("");
   const [location, setLocation] = useState("");
-  const onClickSearch = async (date: string) => {
-    const data: any = await handleGetRequest(
-      `/api/search/traffic-cameras?date_time=${date}`
-    );
+  const [dateTime, setDateTime] = useState("");
 
+  const onClickSearch = async (dateTime: string) => {
+    const data: any = await getTrafficImagesData(dateTime);
+
+    setDateTime(dateTime);
     setTableData(data);
-    // showWeatherAndPhoto(data[0]);
   };
 
-  const showWeatherAndPhoto = async (row: any) => {
-    setWeatherForcast(row.weather);
+  const onClickLocation = async (dateTime: string, row: any) => {
+    const { location } = row;
+    const data: any = await getWeatherForecastData(dateTime, location);
+
+    setWeatherForcast(data);
     setPhoto(row.image);
     setLocation(row.location);
   };
-  const isResultFound = tableData.length > 0;
+
+  const isResultFound = tableData && tableData.length > 0;
   const date = getCurrentDateString();
+
+  //to be revisited - move code to utils
+  if (cookies[USER_ID_COOKIE] === undefined) {
+    const oneYearFromNow = new Date(
+      new Date().setFullYear(new Date().getFullYear() + 1)
+    );
+    setCookie(USER_ID_COOKIE, encodeBase64(Date.now().toString()), {
+      expires: oneYearFromNow,
+    });
+  }
+
   return (
     <>
       <div>&nbsp;</div>
@@ -35,11 +63,13 @@ const Home = () => {
         <GridContainer>
           <GridRow columns={2}>
             <GridColumn>
-              <SearchBox onClickSearch={() => onClickSearch(date)} />
+              <SearchBox onClickSearch={onClickSearch} />
             </GridColumn>
           </GridRow>
         </GridContainer>
       </div>
+
+      <RecentSearches />
 
       <GridContainer>
         <GridRow columns={2}>
@@ -49,7 +79,7 @@ const Home = () => {
                 <GridColumn>
                   {tableData.map((row: any) => (
                     <div>
-                      <Card onClick={() => showWeatherAndPhoto(row)}>
+                      <Card onClick={() => onClickLocation(dateTime, row)}>
                         {row.location}
                       </Card>
                       <br />
