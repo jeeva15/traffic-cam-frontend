@@ -1,32 +1,26 @@
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
-import Button from "./";
+import WeatherCard from "./";
 
 const setup = (overrideProps?: any) => {
-    const onClick  =()=>{};
-    render(
-        <Button onClick={onClick} {...overrideProps}>Search</Button>
-    );
+  render(<WeatherCard {...overrideProps} />);
 };
 
-describe("Button", () => {
-  it("should display label and text input with value", () => {
+describe("WeatherCard", () => {
+  it("should display card with title", () => {
     const mockProps = {};
     setup(mockProps);
-    const button = screen.getByText('Search');
 
-    expect(button).toBeInTheDocument();
+    const card = screen.getByText("Weather");
+
+    expect(card).toBeInTheDocument();
   });
 
-  it("should call onclick", () => {
-    const testFunction = jest.fn();
-    const mockProps = {onClick:testFunction};
+  it("should render forcast", () => {
+    const mockProps = { forecast: "cloudy" };
     setup(mockProps);
-    
-    const button = screen.getByText('Search');
-    fireEvent.click(button);
+    const forecast = screen.getByText("cloudy");
 
-    expect(button).toBeInTheDocument();
-    expect(testFunction).toBeCalled();
+    expect(forecast).toBeInTheDocument();
   });
 });

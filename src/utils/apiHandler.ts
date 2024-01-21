@@ -37,12 +37,10 @@ export const getWeatherForecastData = async (
 };
 
 export const handleGetRequest = async (url: string, headers?: {}) => {
-  return axios({
-    url,
-    method: "get",
-    withCredentials: true,
-    headers,
-  })
+  return axios
+    .get(url, {
+      withCredentials: true,
+    })
     .then((response) => {
       return response.data;
     })
@@ -88,6 +86,10 @@ export const errorHandler = (error: any) => {
 
     case ApiErrorCodes.NOT_FOUND_ERROR:
       toast(AppErrorMessages.API_NOT_FOUND_ERROR, toastConfig);
+      return error;
+
+    case ApiErrorCodes.SERVICE_NOT_AVAILABLE:
+      toast(AppErrorMessages.SERVICE_NOT_AVAILABLE_ERROR, toastConfig);
       return error;
 
     default:

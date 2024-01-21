@@ -6,19 +6,19 @@ import Card from "../Card";
 
 interface StateProps {
   location: String;
-  forcast?: string;
+  forecast?: string;
   date?: string;
 }
 
-const WeatherCard: FC<StateProps> = ({ location, forcast, date }) => {
-  const iconClassName = `wi wi-day-${forcast?.toLowerCase()}`;
+const WeatherCard: FC<StateProps> = ({ location, forecast }) => {
+  const iconClassName = `wi wi-day-${forecast?.toLowerCase()}`;
   return (
     <Card title="Weather" className={styles.weatherCard}>
       <div className={cx(styles.leftPanel, styles.panel)}>
         <div className="city padt-10 padb-10">{location}</div>
         <div className={styles.forcast}>
           <i className={iconClassName}></i>
-          {forcast}
+          {forecast}
         </div>
       </div>
     </Card>

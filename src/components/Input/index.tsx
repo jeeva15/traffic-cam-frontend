@@ -5,12 +5,12 @@ import styles from "./style.module.scss";
 interface StateProps {
   name: string;
   id: string;
+  type: string;
+  onChange: (data: any) => void;
   placeHolder?: string;
   width?: string;
   height?: string;
-  onChange: (data: any) => void;
   value?: string;
-  type: string;
 }
 
 const DateInput: FC<StateProps> = ({

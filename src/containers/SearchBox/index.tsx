@@ -13,6 +13,7 @@ const SearchBox: FC<StateProps> = ({ onClickSearch }) => {
   const [dateValue, setDate] = useState("");
   const [timeValue, setTime] = useState("");
   const onChangeDateHandler = (event: any) => {
+    console.log("Handling input change:", event.target.value);
     setDate(event.target.value);
   };
 
@@ -37,6 +38,7 @@ const SearchBox: FC<StateProps> = ({ onClickSearch }) => {
           id="date"
           placeHolder="dd/mm/yyyy"
           onChange={(e: any) => onChangeDateHandler(e)}
+          value={dateValue}
         />
 
         <Input
@@ -45,6 +47,7 @@ const SearchBox: FC<StateProps> = ({ onClickSearch }) => {
           id="time"
           placeHolder="hh/mm"
           onChange={onChangeTimeHandler}
+          value={timeValue}
         />
 
         <Button

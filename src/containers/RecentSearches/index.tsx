@@ -27,7 +27,10 @@ const RecentSearches: FC = () => {
             <div className={styles.recentSearch}>{title}</div>
             {recentSearches.map((item: any) => (
               <div className={styles.badgeContainer}>
-                <div className={styles.recentSearchBadges}>
+                <div
+                  id={item.search_date_time}
+                  className={styles.recentSearchBadges}
+                >
                   <span className="history-icon fas fa-redo regenerate-icon icon"></span>
                   {formatDateDDMMYYYYHHmmss(item.search_date_time)}{" "}
                   {isNotEmpty(item.location) && <span>- {item.location}</span>}

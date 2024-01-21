@@ -3,30 +3,33 @@ import { screen, render, fireEvent } from "@testing-library/react";
 import Button from "./";
 
 const setup = (overrideProps?: any) => {
-    const onClick  =()=>{};
-    render(
-        <Button onClick={onClick} {...overrideProps}>Search</Button>
-    );
+  const onClick = () => {};
+  render(
+    <Button onClick={onClick} {...overrideProps}>
+      {" "}
+      Search
+    </Button>
+  );
 };
 
-describe("Button", () => {
-  it("should display label and text input with value", () => {
+describe("Table", () => {
+  it("should render button", () => {
     const mockProps = {};
     setup(mockProps);
-    const button = screen.getByText('Search');
+    const button = screen.getByText("Search");
 
     expect(button).toBeInTheDocument();
   });
 
-  it("should call onclick", () => {
+  it("should call onclick function", () => {
     const testFunction = jest.fn();
-    const mockProps = {onClick:testFunction};
+    const mockProps = { onClick: testFunction };
     setup(mockProps);
-    
-    const button = screen.getByText('Search');
+    const button = screen.getByText("Search");
+
     fireEvent.click(button);
 
     expect(button).toBeInTheDocument();
-    expect(testFunction).toBeCalled();
+    expect(testFunction).toBeCalledTimes(1);
   });
 });

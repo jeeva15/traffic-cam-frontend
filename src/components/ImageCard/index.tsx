@@ -1,16 +1,15 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC } from "react";
 
 import styles from "./style.module.scss";
 import Card from "../Card";
 
 interface StateProps {
   imgURL: string;
-  location: string;
   alt: string;
   title: string;
 }
 
-const ImageCard: FC<StateProps> = ({ imgURL, location, alt, title }) => {
+const ImageCard: FC<StateProps> = ({ imgURL, alt, title }) => {
   return (
     <div className={styles.imageCard}>
       <Card title={title}>

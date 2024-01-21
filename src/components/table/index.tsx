@@ -21,6 +21,7 @@ interface Props {
   onRowClick: (param: any) => void;
   className?: string;
   title?: string;
+  hideHeader?: boolean;
 }
 const Table: React.FC<Props> = ({
   columns,
@@ -28,6 +29,7 @@ const Table: React.FC<Props> = ({
   onRowClick,
   className,
   title,
+  hideHeader = false,
 }) => {
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 769);
 
@@ -47,13 +49,15 @@ const Table: React.FC<Props> = ({
   const renderDesktopView = () => {
     return (
       <table className={cx(styles.mainTable, className)}>
-        {/* <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.field}>{column.label}</th>
-            ))}
-          </tr>
-        </thead>> */}
+        {hideHeader === false && (
+          <thead>
+            <tr>
+              {columns.map((column) => (
+                <th key={column.field}>{column.label}</th>
+              ))}
+            </tr>
+          </thead>
+        )}
         <tbody>
           {rows.map((row) => (
             <tr key={row.id} onClick={() => row}>

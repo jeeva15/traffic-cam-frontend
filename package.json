@@ -51,5 +51,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "<rootDir>/src/__mocks__/axios.ts"
+    }
+  }
 }

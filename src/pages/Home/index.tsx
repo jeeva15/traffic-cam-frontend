@@ -14,7 +14,7 @@ import ImageCard from "../../components/ImageCard";
 import { useCookies } from "react-cookie";
 import { USER_ID_COOKIE } from "../../common/constants";
 import RecentSearches from "../../containers/RecentSearches";
-import Table from "../../components/table";
+import Table from "../../components/Table";
 import Card from "../../components/Card";
 import styles from "./style.module.scss";
 
@@ -34,16 +34,15 @@ const Home = () => {
   };
 
   const onClickLocation = async (row: any) => {
-    const { location } = row;
-    const data: any = await getWeatherForecastData(dateTime, location);
+    const { image, weatherLocation } = row;
+    const data: any = await getWeatherForecastData(dateTime, weatherLocation);
 
     setWeatherForcast(data);
-    setPhoto(row.image);
-    setLocation(row.location);
+    setPhoto(image);
+    setLocation(weatherLocation);
   };
 
   const isResultFound = tableData && tableData.length > 0;
-  const date = getCurrentDateString();
 
   //to be revisited - move code to utils
   if (cookies[USER_ID_COOKIE] === undefined) {
@@ -57,7 +56,7 @@ const Home = () => {
 
   var column = [
     {
-      label: "Location",
+      label: "Camera - Location",
       field: "location",
     },
     {
@@ -83,35 +82,27 @@ const Home = () => {
       <div className={styles.result}>
         {isResultFound && (
           <div>
-            <Card title="Location" className="locationCard">
+            <Card title="Camera - Location" className="locationCard">
               <Table
                 onRowClick={onClickLocation}
                 columns={column}
                 rows={tableData}
                 title="Locations"
+                hideHeader={true}
               ></Table>
             </Card>
           </div>
         )}
         {weatherForcast !== "" && (
           <div className={styles.weatherContainer}>
-            <WeatherCard
-              location={location}
-              forcast={weatherForcast}
-              date={date}
-            />
+            <WeatherCard location={location} forecast={weatherForcast} />
           </div>
         )}
       </div>
 
       {isNotEmpty(photo) && (
         <div className="imageContainer">
-          <ImageCard
-            imgURL={photo}
-            alt="Screenshot"
-            title="Traffic Camera"
-            location={location}
-          />
+          <ImageCard imgURL={photo} alt="Screenshot" title="Traffic Camera" />
         </div>
       )}
     </div>

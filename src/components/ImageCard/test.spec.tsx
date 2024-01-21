@@ -1,34 +1,27 @@
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
-import Button from ".";
+import ImageCard from ".";
 
 const setup = (overrideProps?: any) => {
-  const onClick = () => {};
-  render(
-    <Button onClick={onClick} {...overrideProps}>
-      Search
-    </Button>
-  );
+  render(<ImageCard {...overrideProps}>Search</ImageCard>);
 };
 
-describe("Button", () => {
-  it("should display label and text input with value", () => {
-    const mockProps = {};
+describe("ImageCard", () => {
+  it("should display card with title", () => {
+    const mockProps = { title: "test title" };
     setup(mockProps);
-    const button = screen.getByText("Search");
 
-    expect(button).toBeInTheDocument();
+    const card = screen.getByText("test title");
+
+    expect(card).toBeInTheDocument();
   });
 
-  it("should call onclick", () => {
-    const testFunction = jest.fn();
-    const mockProps = { onClick: testFunction };
+  it("should display image card with child", () => {
+    const mockProps = { imgURL: "test.jpg", alt: "alt_img" };
     setup(mockProps);
+    const image = screen.getByAltText("alt_img");
 
-    const button = screen.getByText("Search");
-    fireEvent.click(button);
-
-    expect(button).toBeInTheDocument();
-    expect(testFunction).toBeCalled();
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute("src", "test.jpg");
   });
 });

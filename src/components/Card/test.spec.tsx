@@ -1,34 +1,37 @@
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
-import Button from ".";
+import Card from ".";
 
 const setup = (overrideProps?: any) => {
-  const onClick = () => {};
-  render(
-    <Button onClick={onClick} {...overrideProps}>
-      Search
-    </Button>
-  );
+  render(<Card {...overrideProps}>Card Test</Card>);
 };
 
-describe("Button", () => {
-  it("should display label and text input with value", () => {
+describe("Card", () => {
+  it("should display card with child", () => {
     const mockProps = {};
     setup(mockProps);
-    const button = screen.getByText("Search");
+    const card = screen.getByText("Card Test");
 
-    expect(button).toBeInTheDocument();
+    expect(card).toBeInTheDocument();
   });
 
-  it("should call onclick", () => {
-    const testFunction = jest.fn();
-    const mockProps = { onClick: testFunction };
+  it("should display card without title when title is empty", () => {
+    const mockProps = {};
     setup(mockProps);
 
-    const button = screen.getByText("Search");
-    fireEvent.click(button);
+    const card = screen.getByText("Card Test");
+    const title = screen.queryAllByText("title");
 
-    expect(button).toBeInTheDocument();
-    expect(testFunction).toBeCalled();
+    expect(card).toBeInTheDocument();
+    expect(title.length).toBe(0);
+  });
+
+  it("should display card with title", () => {
+    const mockProps = { title: "test title" };
+    setup(mockProps);
+
+    const card = screen.getByText("test title");
+
+    expect(card).toBeInTheDocument();
   });
 });
