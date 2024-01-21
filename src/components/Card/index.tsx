@@ -1,17 +1,19 @@
 import { FC, ReactNode } from "react";
 import styles from "./style.module.scss";
+import cx from "classnames";
 
 interface StateProps {
   children: ReactNode;
-  onClick: (data: any) => void;
+  onClick?: (data: any) => void;
+  title?: string;
+  className?: string;
 }
 
-const Card: FC<StateProps> = ({ children, onClick }) => {
+const Card: FC<StateProps> = ({ children, onClick, title, className }) => {
   return (
-    <div className={styles.card} onClick={onClick}>
-      <div className="city">
-        <h3>{children}</h3>
-      </div>
+    <div className={cx(styles.card, className)} onClick={onClick}>
+      {title && <div className={styles.title}>{title}</div>}
+      <div className={styles.childContainer}>{children}</div>
     </div>
   );
 };

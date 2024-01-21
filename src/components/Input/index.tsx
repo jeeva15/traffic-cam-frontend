@@ -9,10 +9,11 @@ interface StateProps {
   width?: string;
   height?: string;
   onChange: (data: any) => void;
-  value: string;
+  value?: string;
+  type: string;
 }
 
-const TextInput: FC<StateProps> = ({
+const DateInput: FC<StateProps> = ({
   name,
   id,
   placeHolder,
@@ -20,14 +21,15 @@ const TextInput: FC<StateProps> = ({
   height,
   onChange,
   value,
+  type,
 }) => {
   return (
     <input
-      type="text"
+      type={type}
       name={name}
       id={id}
       placeholder={placeHolder}
-      className={styles.inputBox}
+      className={styles.input}
       width={width}
       height={height}
       onChange={onChange}
@@ -36,4 +38,4 @@ const TextInput: FC<StateProps> = ({
   );
 };
 
-export default TextInput;
+export default DateInput;

@@ -3,6 +3,7 @@ import { ToastOptions, toast } from "react-toastify";
 import {
   ApiErrorCodes,
   AppErrorMessages,
+  RECENT_SEARCH_API,
   TRAFFIC_IMAGE_API,
   USER_RECENT_SEARCH_API,
   WEATHER_FORECAST_API,
@@ -19,6 +20,9 @@ export const getTrafficImagesData = async (
 
 export const getRecentUsersSearch = async (): Promise<Response> => {
   return handleGetRequest(USER_RECENT_SEARCH_API);
+};
+export const getRecentSearch = async (): Promise<Response> => {
+  return handleGetRequest(RECENT_SEARCH_API);
 };
 
 export const getWeatherForecastData = async (
@@ -65,7 +69,6 @@ export const handlePostRequest = async (
 };
 
 const toastConfig: ToastOptions = {
-  position: "top-center",
   type: "error",
 };
 

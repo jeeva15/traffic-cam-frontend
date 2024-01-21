@@ -1,18 +1,17 @@
 import { FC, useState } from "react";
 import Button from "../../components/Button";
-import TextInput from "../../components/TextInput";
-import { getCurrentDateString, getCurrentTimeString } from "../../utils/utils";
+import { isNotEmpty } from "../../utils/utils";
 import styles from "./style.module.scss";
+import Input from "../../components/Input";
+import { toast } from "react-toastify";
+import Card from "../../components/Card";
 
 interface StateProps {
   onClickSearch: (date: string) => void;
 }
 const SearchBox: FC<StateProps> = ({ onClickSearch }) => {
-  const todayDate = getCurrentDateString();
-  const timeNow = getCurrentTimeString();
-
-  const [dateValue, setDate] = useState(todayDate);
-  const [timeValue, setTime] = useState(timeNow);
+  const [dateValue, setDate] = useState("");
+  const [timeValue, setTime] = useState("");
   const onChangeDateHandler = (event: any) => {
     setDate(event.target.value);
   };
@@ -22,49 +21,39 @@ const SearchBox: FC<StateProps> = ({ onClickSearch }) => {
   };
 
   const onClickSearchButton = (date: string) => {
-    onClickSearch(date);
+    if (isNotEmpty(date)) {
+      onClickSearch(date);
+    } else {
+      toast.error("Please choose date");
+    }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.row}>
-        <div className={styles.col25}>
-          <label htmlFor="date">Date</label>
-        </div>
+    <Card>
+      <div className={styles.container}>
+        <Input
+          type="date"
+          name="date"
+          id="date"
+          placeHolder="dd/mm/yyyy"
+          onChange={(e: any) => onChangeDateHandler(e)}
+        />
 
-        <div className={styles.col75}>
-          <TextInput
-            name="date"
-            id="date"
-            placeHolder="dd/mm/yyyy"
-            value={dateValue}
-            onChange={(e: any) => onChangeDateHandler(e)}
-          />
-        </div>
-      </div>
-      <div className={styles.row}>
-        <div className={styles.col25}>
-          <label htmlFor="time">Time:</label>
-        </div>
-        <div className={styles.col75}>
-          <TextInput
-            name="time"
-            id="time"
-            placeHolder="hh/mm/ss"
-            value={timeValue}
-            onChange={onChangeTimeHandler}
-          />
-        </div>
-      </div>
-      <div className={styles.row}>
-        <br />
+        <Input
+          type="time"
+          name="time"
+          id="time"
+          placeHolder="hh/mm"
+          onChange={onChangeTimeHandler}
+        />
+
         <Button
           onClick={() => onClickSearchButton(`${dateValue} ${timeValue}`)}
         >
           Search
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

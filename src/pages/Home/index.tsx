@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchBox from "../../containers/SearchBox";
 import {
-  getRecentUsersSearch,
   getTrafficImagesData,
   getWeatherForecastData,
 } from "../../utils/apiHandler";
-import { GridColumn, GridContainer, GridRow } from "../../components/Grid";
-import Card from "../../components/Card";
 import WeatherCard from "../../components/WeatherCard";
 import {
   encodeBase64,
-  formatDateDDMMYYYYHHmmss,
   getCurrentDateString,
   isNotEmpty,
 } from "../../utils/utils";
@@ -18,6 +14,9 @@ import ImageCard from "../../components/ImageCard";
 import { useCookies } from "react-cookie";
 import { USER_ID_COOKIE } from "../../common/constants";
 import RecentSearches from "../../containers/RecentSearches";
+import Table from "../../components/table";
+import Card from "../../components/Card";
+import styles from "./style.module.scss";
 
 const Home = () => {
   const [tableData, setTableData] = useState([]);
@@ -34,7 +33,7 @@ const Home = () => {
     setTableData(data);
   };
 
-  const onClickLocation = async (dateTime: string, row: any) => {
+  const onClickLocation = async (row: any) => {
     const { location } = row;
     const data: any = await getWeatherForecastData(dateTime, location);
 
@@ -56,72 +55,66 @@ const Home = () => {
     });
   }
 
+  var column = [
+    {
+      label: "Location",
+      field: "location",
+    },
+    {
+      label: "",
+      field: "",
+      showButton: true,
+    },
+  ];
+
   return (
-    <>
+    <div className={styles.main}>
+      <div className={styles.header}>
+        <h1>Traffic Cam Website</h1>
+      </div>
       <div>&nbsp;</div>
-      <div className="main">
-        <GridContainer>
-          <GridRow columns={2}>
-            <GridColumn>
-              <SearchBox onClickSearch={onClickSearch} />
-            </GridColumn>
-          </GridRow>
-        </GridContainer>
+      <div>
+        <SearchBox onClickSearch={onClickSearch} />
+      </div>
+      <div>
+        <RecentSearches />
       </div>
 
-      <RecentSearches />
+      <div className={styles.result}>
+        {isResultFound && (
+          <div>
+            <Card title="Location" className="locationCard">
+              <Table
+                onRowClick={onClickLocation}
+                columns={column}
+                rows={tableData}
+                title="Locations"
+              ></Table>
+            </Card>
+          </div>
+        )}
+        {weatherForcast !== "" && (
+          <div className={styles.weatherContainer}>
+            <WeatherCard
+              location={location}
+              forcast={weatherForcast}
+              date={date}
+            />
+          </div>
+        )}
+      </div>
 
-      <GridContainer>
-        <GridRow columns={2}>
-          {isResultFound && (
-            <div className="locationContainer">
-              <div className="locationChild">
-                <GridColumn>
-                  {tableData.map((row: any) => (
-                    <div>
-                      <Card onClick={() => onClickLocation(dateTime, row)}>
-                        {row.location}
-                      </Card>
-                      <br />
-                    </div>
-                  ))}
-                </GridColumn>
-              </div>
-            </div>
-          )}
-          <GridColumn>
-            {weatherForcast !== "" && (
-              <>
-                <WeatherCard
-                  location={location}
-                  forcast={weatherForcast}
-                  date={date}
-                />
-              </>
-            )}
-          </GridColumn>
-        </GridRow>
-      </GridContainer>
-      <br />
-      <br />
-
-      {photo !== "" && (
-        <GridContainer>
-          <GridRow columns={1}>
-            <GridColumn>
-              <ImageCard
-                imgURL={photo}
-                alt="Screenshot"
-                title="Traffic Camera"
-                location={location}
-              />
-            </GridColumn>
-          </GridRow>
-        </GridContainer>
+      {isNotEmpty(photo) && (
+        <div className="imageContainer">
+          <ImageCard
+            imgURL={photo}
+            alt="Screenshot"
+            title="Traffic Camera"
+            location={location}
+          />
+        </div>
       )}
-      <br />
-      <br />
-    </>
+    </div>
   );
 };
 

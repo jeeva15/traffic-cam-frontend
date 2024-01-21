@@ -2,7 +2,8 @@ const API_PREFIX = "/api";
 
 export const TRAFFIC_IMAGE_API = `${API_PREFIX}/search/traffic-images`;
 export const WEATHER_FORECAST_API = `${API_PREFIX}/search/weather-forecast`;
-export const USER_RECENT_SEARCH_API = `${API_PREFIX}/user/recent-search`;
+export const USER_RECENT_SEARCH_API = `${API_PREFIX}/user/user-recent-search`;
+export const RECENT_SEARCH_API = `${API_PREFIX}/user/recent-search`;
 
 //Error Messages
 export const AppErrorMessages = {
