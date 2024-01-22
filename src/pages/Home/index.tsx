@@ -34,12 +34,12 @@ const Home = () => {
   };
 
   const onClickLocation = async (row: any) => {
-    const { image, weatherLocation } = row;
-    const data: any = await getWeatherForecastData(dateTime, weatherLocation);
+    const { image, location } = row;
+    const data: any = await getWeatherForecastData(dateTime, location);
 
     setWeatherForcast(data);
     setPhoto(image);
-    setLocation(weatherLocation);
+    setLocation(location);
   };
 
   const isResultFound = tableData && tableData.length > 0;
@@ -57,7 +57,7 @@ const Home = () => {
   var column = [
     {
       label: "Camera - Location",
-      field: "location",
+      field: "displayLocation",
     },
     {
       label: "",

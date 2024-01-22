@@ -15,7 +15,16 @@ export const getTrafficImagesData = async (
 ): Promise<Response> => {
   return handleGetRequest(
     `${TRAFFIC_IMAGE_API}?date_time=${encodeBase64(dateTime)}`
-  );
+  ).then((dataArr: any) => {
+    const resultArr: any = [];
+    dataArr.map((data: any) => {
+      resultArr.push({
+        ...data,
+        displayLocation: `${data.cameraId} - ${data.location}`,
+      });
+    });
+    return resultArr;
+  });
 };
 
 export const getRecentUsersSearch = async (): Promise<Response> => {

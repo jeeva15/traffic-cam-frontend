@@ -61,9 +61,10 @@ describe("Home", () => {
     render(<Home />);
     jest.spyOn(apiHandler, "getTrafficImagesData").mockReturnValueOnce([
       {
-        weatherLocation: "Geylang",
-        location: "1002 - Geylang",
-        image: "2024/01/87c1ccaa-b59a-4c89-b175-8312a9d94f35.jpg",
+        location: "Geylang",
+        cameraId: "1002",
+        image: "test.jpg",
+        displayLocation: "1002 - Geylang",
       },
     ] as any);
 
@@ -86,19 +87,12 @@ describe("Home", () => {
 
   test("Should display weather and image cards", async () => {
     render(<Home />);
-    jest.spyOn(apiHandler, "getTrafficImagesData").mockReturnValueOnce([
+    jest.spyOn(apiHandler, "getTrafficImagesData").mockReturnValue([
       {
-        weatherLocation: "Geylang",
-        location: "1002 - Geylang",
-        image: "2024/01/87c1ccaa-b59a-4c89-b175-8312a9d94f35.jpg",
-      },
-    ] as any);
-
-    jest.spyOn(apiHandler, "getTrafficImagesData").mockReturnValueOnce([
-      {
-        weatherLocation: "Geylang",
-        location: "1002 - Geylang",
-        image: "2024/01/87c1ccaa-b59a-4c89-b175-8312a9d94f35.jpg",
+        location: "Geylang",
+        cameraId: "1002",
+        image: "test.jpg",
+        displayLocation: "1002 - Geylang",
       },
     ] as any);
 
@@ -107,6 +101,7 @@ describe("Home", () => {
     // eslint-disable-next-line testing-library/no-wait-for-side-effects
     fireEvent.change(dateInput, { target: { value: "2024-01-21" } });
 
+    expect(dateInput).toHaveValue("2024-01-21");
     // Traffic image data assert
     await waitFor(() => {
       const searchButton = screen.getByText("Search");
